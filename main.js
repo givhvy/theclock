@@ -6,10 +6,11 @@ let miniWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1200,
+    width: 320,
     height: 800,
-    minWidth: 800,
+    minWidth: 280,
     minHeight: 600,
+    maxWidth: 350,
     backgroundColor: '#000000',
     webPreferences: {
       nodeIntegration: true,
@@ -37,8 +38,8 @@ function createMiniWindow(data) {
   }
 
   miniWindow = new BrowserWindow({
-    width: 230,
-    height: 115,
+    width: 100,
+    height: 140,
     frame: false,
     transparent: true,
     alwaysOnTop: true,

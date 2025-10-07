@@ -178,7 +178,7 @@ class FocusTimer {
 
     openMiniMode() {
         const minutes = Math.floor(this.timeRemaining / 60);
-        const label = this.isRunning ? this.sessionLabel.textContent : "You'll have no breaks";
+        const label = this.sessionLabel.textContent;
 
         const data = {
             time: this.timeDisplay.textContent,
