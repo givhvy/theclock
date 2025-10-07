@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus - Mini</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: transparent;
+            overflow: hidden;
+            user-select: none;
+            -webkit-app-region: drag;
+        }
+
+        .mini-container {
+            width: 230px;
+            background: rgba(40, 40, 40, 0.98);
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+        }
+
+        .mini-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .mini-icon {
+            width: 28px;
+            height: 28px;
+            background: rgba(96, 165, 250, 0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .mini-icon svg {
+            width: 16px;
+            height: 16px;
+            color: #60a5fa;
+        }
+
+        .mini-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .mini-time {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.3px;
+            margin-bottom: 2px;
+        }
+
+        .mini-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 11px;
+            font-weight: 400;
+        }
+
+        .mini-controls {
+            display: flex;
+            gap: 8px;
+            -webkit-app-region: no-drag;
+        }
+
+        .mini-btn {
+            flex: 1;
+            height: 32px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .mini-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .mini-btn:active {
+            transform: scale(0.97);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .mini-btn svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .mini-btn.primary {
+            background: #60a5fa;
+        }
+
+        .mini-btn.primary:hover {
+            background: #3b82f6;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.15s ease;
+            -webkit-app-region: no-drag;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: rgba(239, 68, 68, 0.9);
+            color: #fff;
+        }
+
+        .close-btn:active {
+            transform: scale(0.95);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="mini-container">
+        <button class="close-btn" id="close-btn">✕</button>
+
+        <div class="mini-header">
+            <div class="mini-icon">
+                <svg viewBox="0 0 20 20">
+                    <circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <circle cx="10" cy="10" r="2.5" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="mini-info">
+                <div class="mini-time" id="mini-time">25 mins</div>
+                <div class="mini-label" id="mini-label">You'll have no breaks</div>
+            </div>
+        </div>
+
+        <div class="mini-controls">
+            <button class="mini-btn primary" id="mini-play">
+                <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" fill="currentColor"/>
+                </svg>
+                Start
+            </button>
+            <button class="mini-btn primary hidden" id="mini-pause">
+                <svg viewBox="0 0 24 24">
+                    <rect x="6" y="4" width="4" height="16" fill="currentColor"/>
+                    <rect x="14" y="4" width="4" height="16" fill="currentColor"/>
+                </svg>
+                Pause
+            </button>
+            <button class="mini-btn" id="mini-skip">
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" fill="currentColor"/>
+                </svg>
+                Skip
+            </button>
+        </div>
+    </div>
+
+    <script src="mini-renderer.js"></script>
+</body>
+</html>

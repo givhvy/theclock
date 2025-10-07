@@ -1,0 +1,266 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000000;
+    color: #ffffff;
+    overflow: hidden;
+    user-select: none;
+}
+
+.app {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+    width: 240px;
+    background: #0a0a0a;
+    padding: 20px 0;
+    border-right: 1px solid #1a1a1a;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px;
+    cursor: pointer;
+    color: #999;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.nav-item:hover {
+    background: #1a1a1a;
+    color: #fff;
+}
+
+.nav-item.active {
+    background: #1a1a1a;
+    color: #60a5fa;
+    border-left-color: #60a5fa;
+}
+
+.nav-item svg {
+    flex-shrink: 0;
+}
+
+/* Main Content */
+.content {
+    flex: 1;
+    background: #000000;
+    overflow-y: auto;
+}
+
+.page {
+    display: none;
+    padding: 40px;
+    animation: fadeIn 0.3s;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 40px;
+    color: #ffffff;
+}
+
+/* Focus Session */
+.focus-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.timer-display {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    margin: 40px auto;
+}
+
+.timer-circle {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.timer-bg {
+    fill: none;
+    stroke: #1a1a1a;
+    stroke-width: 8;
+}
+
+.timer-progress {
+    fill: none;
+    stroke: #60a5fa;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 565.48;
+    stroke-dashoffset: calc(565.48 * (1 - var(--progress)));
+    transition: stroke-dashoffset 1s linear;
+}
+
+.timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.time-main {
+    font-size: 72px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    font-variant-numeric: tabular-nums;
+}
+
+.session-label {
+    font-size: 18px;
+    color: #999;
+}
+
+/* Controls */
+.timer-controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.btn-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.btn-control:hover {
+    background: #2a2a2a;
+    transform: translateY(-2px);
+}
+
+.btn-control:active {
+    transform: translateY(0);
+}
+
+.btn-start {
+    background: #60a5fa;
+}
+
+.btn-start:hover {
+    background: #3b82f6;
+}
+
+.btn-pause {
+    background: #fbbf24;
+}
+
+.btn-pause:hover {
+    background: #f59e0b;
+}
+
+.btn-reset:hover {
+    background: #ef4444;
+}
+
+.btn-mini {
+    background: #8b5cf6;
+}
+
+.btn-mini:hover {
+    background: #7c3aed;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Settings */
+.focus-settings {
+    background: #0a0a0a;
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.setting-row:last-child {
+    border-bottom: none;
+}
+
+.setting-row label {
+    font-size: 16px;
+    color: #ccc;
+}
+
+.setting-row select {
+    padding: 8px 16px;
+    background: #1a1a1a;
+    color: #fff;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.setting-row select:hover {
+    background: #2a2a2a;
+}
+
+/* Coming Soon */
+.coming-soon {
+    text-align: center;
+    font-size: 24px;
+    color: #666;
+    margin-top: 100px;
+}
+
+/* Scrollbar */
+.content::-webkit-scrollbar {
+    width: 10px;
+}
+
+.content::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: #2a2a2a;
+    border-radius: 5px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+    background: #3a3a3a;
+}
