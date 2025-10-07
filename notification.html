@@ -45,6 +45,21 @@
             }
         }
 
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
+
+        .notification-container.closing {
+            animation: slideOut 0.3s ease-out forwards;
+        }
+
         .notification-icon {
             width: 48px;
             height: 48px;
@@ -151,8 +166,21 @@
         });
 
         closeBtn.addEventListener('click', () => {
-            ipcRenderer.send('close-notification');
+            const container = document.querySelector('.notification-container');
+            container.classList.add('closing');
+            setTimeout(() => {
+                ipcRenderer.send('close-notification');
+            }, 300);
         });
+
+        // Auto close after 5 seconds
+        setTimeout(() => {
+            const container = document.querySelector('.notification-container');
+            container.classList.add('closing');
+            setTimeout(() => {
+                ipcRenderer.send('close-notification');
+            }, 300);
+        }, 5000);
     </script>
 </body>
 </html>

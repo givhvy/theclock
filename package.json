@@ -11,8 +11,27 @@
     "appId": "com.focusclock.app",
     "productName": "Clock",
     "win": {
-      "target": "nsis",
-      "icon": "build/icon.ico"
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "files": [
+      "**/*",
+      "!node_modules/**/*",
+      "node_modules/electron/**/*"
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     }
   },
   "keywords": [],
