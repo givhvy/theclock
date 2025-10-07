@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: transparent;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .notification-container {
+            width: 320px;
+            height: 120px;
+            background: rgba(40, 40, 40, 0.98);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .notification-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .notification-icon.focus {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        .notification-icon.break {
+            background: rgba(34, 197, 94, 0.2);
+        }
+
+        .notification-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .notification-icon.focus svg {
+            color: #60a5fa;
+        }
+
+        .notification-icon.break svg {
+            color: #22c55e;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .notification-message {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.15s ease;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification-container">
+        <div class="notification-icon focus" id="notif-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title" id="notif-title">Break time!</div>
+            <div class="notification-message" id="notif-message">Time for a break. Stretch and relax!</div>
+        </div>
+        <button class="close-btn" id="close-btn">✕</button>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        const icon = document.getElementById('notif-icon');
+        const title = document.getElementById('notif-title');
+        const message = document.getElementById('notif-message');
+        const closeBtn = document.getElementById('close-btn');
+
+        ipcRenderer.on('show-notification', (event, data) => {
+            if (data.type === 'break') {
+                icon.classList.remove('focus');
+                icon.classList.add('break');
+                title.textContent = 'Break time!';
+                message.textContent = data.message || 'Time for a break. Stretch and relax!';
+            } else {
+                icon.classList.remove('break');
+                icon.classList.add('focus');
+                title.textContent = 'Focus time!';
+                message.textContent = data.message || 'Break is over. Time to focus!';
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            ipcRenderer.send('close-notification');
+        });
+    </script>
+</body>
+</html>

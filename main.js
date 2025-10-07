@@ -3,6 +3,7 @@ const path = require('path');
 
 let mainWindow;
 let miniWindow;
+let notificationWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -68,6 +69,53 @@ function createMiniWindow(data) {
   });
 }
 
+function createNotificationWindow(message, type) {
+  if (notificationWindow) {
+    notificationWindow.close();
+  }
+
+  const { screen } = require('electron');
+  const primaryDisplay = screen.getPrimaryDisplay();
+  const { width, height } = primaryDisplay.workAreaSize;
+
+  notificationWindow = new BrowserWindow({
+    width: 320,
+    height: 120,
+    x: width - 340,
+    y: 20,
+    frame: false,
+    transparent: true,
+    alwaysOnTop: true,
+    skipTaskbar: true,
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+  });
+
+  notificationWindow.setAlwaysOnTop(true, 'screen-saver', 1);
+  notificationWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+
+  notificationWindow.loadFile('notification.html');
+
+  notificationWindow.webContents.on('did-finish-load', () => {
+    notificationWindow.webContents.send('show-notification', { message, type });
+  });
+
+  // Auto close after 5 seconds
+  setTimeout(() => {
+    if (notificationWindow) {
+      notificationWindow.close();
+      notificationWindow = null;
+    }
+  }, 5000);
+
+  notificationWindow.on('closed', () => {
+    notificationWindow = null;
+  });
+}
+
 ipcMain.on('open-mini-window', (event, data) => {
   createMiniWindow(data);
 });
@@ -106,6 +154,17 @@ ipcMain.on('pause-timer-from-mini', () => {
 ipcMain.on('skip-timer-from-mini', () => {
   if (mainWindow) {
     mainWindow.webContents.send('skip-timer');
+  }
+});
+
+ipcMain.on('show-notification', (event, data) => {
+  createNotificationWindow(data.message, data.type);
+});
+
+ipcMain.on('close-notification', () => {
+  if (notificationWindow) {
+    notificationWindow.close();
+    notificationWindow = null;
   }
 });
 

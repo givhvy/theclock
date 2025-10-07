@@ -163,15 +163,16 @@ class FocusTimer {
     }
 
     showNotification() {
+        // Use custom notification window that works even in Do Not Disturb mode
         if (this.sessionType === 'focus') {
-            new Notification('Break time!', {
-                body: 'Time for a break. Stretch and relax!',
-                silent: false
+            ipcRenderer.send('show-notification', {
+                message: 'Time for a break. Stretch and relax!',
+                type: 'break'
             });
         } else {
-            new Notification('Focus time!', {
-                body: 'Break is over. Time to focus!',
-                silent: false
+            ipcRenderer.send('show-notification', {
+                message: 'Break is over. Time to focus!',
+                type: 'focus'
             });
         }
     }
